@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rafaelfelix.cursospring.domain.enums.EstadoPagamento;
 
 @Entity
@@ -31,6 +32,8 @@ public class PagamentoComBoleto extends Pagamento {
 	/**
 	 * @return the dataVencimento
 	 */
+	@JsonFormat
+    (shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	public Date getDataVencimento() {
 		return dataVencimento;
 	}
@@ -45,6 +48,8 @@ public class PagamentoComBoleto extends Pagamento {
 	/**
 	 * @return the dataPagamento
 	 */
+	@JsonFormat
+    (shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	public Date getDataPagamento() {
 		return dataPagamento;
 	}
