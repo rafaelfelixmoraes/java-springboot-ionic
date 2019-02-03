@@ -3,6 +3,8 @@ package com.rafaelfelix.cursospring.domain;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.rafaelfelix.cursospring.domain.enums.EstadoPagamento;
 
@@ -10,8 +12,10 @@ import com.rafaelfelix.cursospring.domain.enums.EstadoPagamento;
 public class PagamentoComBoleto extends Pagamento {
 	private static final long serialVersionUID = 4524207576924981771L;
 
+	@Temporal(TemporalType.DATE)
 	private Date dataVencimento;
 	
+	@Temporal(TemporalType.DATE)
 	private Date dataPagamento;
 	
 	public PagamentoComBoleto() {
