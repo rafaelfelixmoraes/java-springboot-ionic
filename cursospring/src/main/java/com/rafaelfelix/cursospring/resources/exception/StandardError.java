@@ -50,7 +50,7 @@ public class StandardError implements Serializable{
 	 * @return the timeStamp
 	 */
 	@JsonFormat
-    (shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+    (shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
 	public Date getTimeStamp() {
 		return timeStamp;
 	}
