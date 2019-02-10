@@ -2,6 +2,7 @@ package com.rafaelfelix.cursospring.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.rafaelfelix.cursospring.domain.Categoria;
+import com.rafaelfelix.cursospring.dto.CategoriaDTO;
 import com.rafaelfelix.cursospring.services.CategoriaService;
 
 @RestController
@@ -26,10 +28,10 @@ public class CategoriaResource {
 	private CategoriaService service;
 	
 	@GetMapping("/listar")
-	public ResponseEntity<?> findAlllistAll() {
+	public ResponseEntity<List<CategoriaDTO>> listAll() {
 		List<Categoria> listObj = service.findAll();
-		
-		return ResponseEntity.ok(listObj);
+		List<CategoriaDTO> listDto = listObj.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok(listDto);
 	}
 	
 	@GetMapping("/{id}")
