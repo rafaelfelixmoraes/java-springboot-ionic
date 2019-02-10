@@ -20,14 +20,14 @@ public class PedidoResource {
 	private PedidoService service;
 	
 	@GetMapping("/listar")
-	public ResponseEntity<?> listar() {
+	public ResponseEntity<?> listAll() {
 		List<Pedido> listObj = service.findAll();
 		
 		return ResponseEntity.ok(listObj);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getPedidoById(@PathVariable Integer id) {
+	public ResponseEntity<Pedido> findById(@PathVariable Integer id) {
 		Pedido obj = service.find(id);
 		return ResponseEntity.ok(obj);
 	}

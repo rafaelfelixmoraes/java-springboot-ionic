@@ -31,8 +31,13 @@ public class CategoriaService {
 		return listObj;
 	}
 	
-	public Categoria gravaCategoria(Categoria categoria) {
+	public Categoria insert(Categoria categoria) {
 		categoria.setId(null);
 		return repo.save(categoria);
+	}
+	
+	public Categoria update(Categoria categoria) {
+		this.find(categoria.getId());
+		return repo.saveAndFlush(categoria);
 	}
 }
