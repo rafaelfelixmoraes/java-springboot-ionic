@@ -41,4 +41,11 @@ public class ResourceExceptionHandler {
 		}
 		return ResponseEntity.badRequest().body(validationError);
     }
+	
+	@ExceptionHandler(UnsupportedOperationException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected ResponseEntity<?> dataIntegrity(UnsupportedOperationException exception, HttpServletRequest request) {
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        	   .body(new StandardError(HttpStatus.INTERNAL_SERVER_ERROR.value(), exception.getMessage(), new Date()));
+    }
 }
