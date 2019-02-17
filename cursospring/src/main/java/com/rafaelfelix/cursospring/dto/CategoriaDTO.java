@@ -4,8 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import javax.validation.constraints.NotEmpty;
-
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import com.rafaelfelix.cursospring.domain.Categoria;
 
@@ -15,7 +14,7 @@ public class CategoriaDTO implements Serializable {
 	private Integer id;
 	
 	@NotEmpty(message = "Preechimento Obrigatório")
-	@Length(min = 5, max = 80, message = "Campo deve possuir entre 5 e 80 caracteres")
+	@Size(min = 5, max = 80, message = "Campo deve possuir entre 5 e 80 caracteres")
 	private String name;
 	
 	public CategoriaDTO() {
