@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.rafaelfelix.cursospring.services.exceptions.DataIntegrityException;
+import com.rafaelfelix.cursospring.services.exceptions.EncodingException;
 import com.rafaelfelix.cursospring.services.exceptions.ObjectNotFoundException;
 
 @ControllerAdvice
@@ -27,14 +28,14 @@ public class ResourceExceptionHandler {
 	
 	@ExceptionHandler(DataIntegrityException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    protected ResponseEntity<?> dataIntegrity(DataIntegrityException exception, HttpServletRequest request) {
+    protected ResponseEntity<?> dataIntegrity(DataIntegrityException exception) {
 		return ResponseEntity.badRequest()
         	   .body(new StandardError(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), new Date()));
     }
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    protected ResponseEntity<?> validation(MethodArgumentNotValidException exception, HttpServletRequest request) {
+    protected ResponseEntity<?> validation(MethodArgumentNotValidException exception) {
 		ValidationError validationError = new ValidationError(HttpStatus.BAD_REQUEST.value(), "Erro de Validação", new Date());
 		for(FieldError error : exception.getBindingResult().getFieldErrors()) {
 			validationError.addError(error.getField(), error.getDefaultMessage());
@@ -47,5 +48,12 @@ public class ResourceExceptionHandler {
     protected ResponseEntity<?> dataIntegrity(UnsupportedOperationException exception, HttpServletRequest request) {
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
         	   .body(new StandardError(HttpStatus.INTERNAL_SERVER_ERROR.value(), exception.getMessage(), new Date()));
+    }
+	
+	@ExceptionHandler(EncodingException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    protected ResponseEntity<?> objectNotFound(EncodingException exception) {
+		return ResponseEntity.badRequest()
+        	   .body(new StandardError(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), new Date()));
     }
 }
