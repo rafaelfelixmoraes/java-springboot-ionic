@@ -7,6 +7,8 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.rafaelfelix.cursospring.domain.utils.CustomSerializer;
 
 @Entity
 public class ItemPedido implements Serializable {
@@ -18,6 +20,8 @@ public class ItemPedido implements Serializable {
 	
 	private Double desconto;
 	private Integer quantidade;
+	
+	@JsonSerialize(using = CustomSerializer.class)
 	private Double preco;
 	
 	public ItemPedido() {
@@ -31,6 +35,11 @@ public class ItemPedido implements Serializable {
 		this.desconto = desconto;
 		this.quantidade = quantidade;
 		this.preco = preco;
+	}
+	
+	@JsonSerialize(using = CustomSerializer.class)
+	public Double getSubTotal() {
+		return (preco - desconto) * quantidade;
 	}
 	
 	@JsonIgnore

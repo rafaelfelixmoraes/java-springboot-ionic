@@ -19,6 +19,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.rafaelfelix.cursospring.domain.utils.CustomSerializer;
 
 @Entity
 public class Pedido implements Serializable {
@@ -54,6 +56,11 @@ public class Pedido implements Serializable {
 		this.instante = instante;
 		this.cliente = cliente;
 		this.enderecoDeEntrega = enderecoDeEntrega;
+	}
+	
+	@JsonSerialize(using = CustomSerializer.class)
+	public Double getValorTotal() {
+		return itens.stream().mapToDouble(subTotais -> subTotais.getSubTotal()).sum();
 	}
 
 	/**
