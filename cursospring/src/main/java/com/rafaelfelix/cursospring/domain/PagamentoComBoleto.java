@@ -7,9 +7,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.rafaelfelix.cursospring.domain.enums.EstadoPagamento;
 
 @Entity
+@JsonTypeName("boleto")
 public class PagamentoComBoleto extends Pagamento {
 	private static final long serialVersionUID = 4524207576924981771L;
 
