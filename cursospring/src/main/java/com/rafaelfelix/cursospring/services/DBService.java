@@ -20,6 +20,7 @@ import com.rafaelfelix.cursospring.domain.PagamentoComCartao;
 import com.rafaelfelix.cursospring.domain.Pedido;
 import com.rafaelfelix.cursospring.domain.Produto;
 import com.rafaelfelix.cursospring.domain.enums.EstadoPagamento;
+import com.rafaelfelix.cursospring.domain.enums.Perfil;
 import com.rafaelfelix.cursospring.domain.enums.TipoCliente;
 import com.rafaelfelix.cursospring.repositories.CategoriaRepository;
 import com.rafaelfelix.cursospring.repositories.CidadeRepository;
@@ -104,9 +105,14 @@ public class DBService {
 
 		Cliente cli1 = new Cliente(null, "Maria Silva", "dickinson.rafael@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, bCrypt.encode("abc123"));
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
+		
+		Cliente cli2 = new Cliente(null, "José da Silva", "rafaelstaile@yahoo.com.br", "19517834098", TipoCliente.PESSOAFISICA, bCrypt.encode("abc123"));
+		cli2.getTelefones().addAll(Arrays.asList("44098866", "912345678"));
+		cli2.addPerfil(Perfil.ADMIN);
 
 		Endereco end1 = new Endereco(null, "Rua Flores", "300", "Apto 203", "Jardim", "38230834", cli1, cid1);
 		Endereco end2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, cid2);
+		Endereco end3 = new Endereco(null, "Avenida Das naçoes Unidas", "2245", "Décimo Quinto Andar", "Centro", "04325678", cli2, cid2);
 
 		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32:05"), cli1, end1);
 		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35:44"), cli1, end2);
@@ -151,6 +157,7 @@ public class DBService {
 		est2.getCidades().addAll(Arrays.asList(cid2, cid3));
 
 		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
+		cli2.getEnderecos().addAll(Arrays.asList(end3));
 
 		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
 
@@ -166,8 +173,8 @@ public class DBService {
 												prod11, prod12, prod13, prod14, prod15));
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3));
-		clienteRepository.save(cli1);
-		enderecoRepository.saveAll(Arrays.asList(end1, end2));
+		clienteRepository.saveAll(Arrays.asList(cli1,cli2));
+		enderecoRepository.saveAll(Arrays.asList(end1, end2, end3));
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
