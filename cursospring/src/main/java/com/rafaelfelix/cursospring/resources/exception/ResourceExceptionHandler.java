@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.rafaelfelix.cursospring.services.exceptions.AuthorizationException;
 import com.rafaelfelix.cursospring.services.exceptions.DataIntegrityException;
 import com.rafaelfelix.cursospring.services.exceptions.EncodingException;
 import com.rafaelfelix.cursospring.services.exceptions.ObjectNotFoundException;
@@ -55,5 +56,12 @@ public class ResourceExceptionHandler {
     protected ResponseEntity<?> objectNotFound(EncodingException exception) {
 		return ResponseEntity.badRequest()
         	   .body(new StandardError(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), new Date()));
+    }
+	
+	@ExceptionHandler(AuthorizationException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    protected ResponseEntity<?> authorization(AuthorizationException exception, HttpServletRequest request) {
+		return ResponseEntity.status(HttpStatus.FORBIDDEN)
+        	   .body(new StandardError(HttpStatus.FORBIDDEN.value(), exception.getMessage(), new Date()));
     }
 }
