@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.rafaelfelix.cursospring.security.JWTAuthenticationFilter;
+import com.rafaelfelix.cursospring.security.JWTAuthorizationFilter;
 import com.rafaelfelix.cursospring.security.JWTUtil;
 
 @Configuration
@@ -55,11 +56,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			   .antMatchers(PUBLIC_MATCHERS).permitAll()
 			   .anyRequest().authenticated();
 		httpSec.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+		httpSec.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 		httpSec.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
+		configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
 		return source;
