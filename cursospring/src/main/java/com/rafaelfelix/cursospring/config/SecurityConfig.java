@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			httpSec.headers().frameOptions().disable();
 		}
 		
-		httpSec.cors().and().csrf().disable();
+		httpSec.csrf().disable();
 		httpSec.authorizeRequests()
 			   .antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
 			   .antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
@@ -69,6 +69,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
+		configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
 		return source;

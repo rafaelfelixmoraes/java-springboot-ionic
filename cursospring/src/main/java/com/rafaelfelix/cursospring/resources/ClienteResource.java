@@ -61,6 +61,7 @@ public class ClienteResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping("/listar")
 	public ResponseEntity<List<ClienteDTO>> listAll() {
 		List<Cliente> listObj = service.findAll();
@@ -68,6 +69,7 @@ public class ClienteResource {
 		return ResponseEntity.ok(listDto);
 	}
 	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping("/page")
 	public ResponseEntity<Page<ClienteDTO>> findPage(
 			@RequestParam(value = "pageNumber", defaultValue = "0") Integer page, 
