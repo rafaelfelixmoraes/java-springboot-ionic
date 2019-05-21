@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.rafaelfelix.cursospring.services.exceptions.FileException;
 
 @Service
 public class CloudinaryService {
@@ -35,7 +36,7 @@ public class CloudinaryService {
 			url = new URL(uploadToCloudinary(multipartFile, fileName));
 			uri = url.toURI();
 		} catch (MalformedURLException | URISyntaxException e) {
-			throw new RuntimeException("Erro ao obter URI. Mensagem: ".concat(e.getMessage()));
+			throw new FileException("Erro ao obter URI. Mensagem: ".concat(e.getMessage()));
 		}
 		
 		return uri;
@@ -51,7 +52,7 @@ public class CloudinaryService {
 			uploadResult = cloudinaryClient.uploader().upload(convFile, params);
 			LOG.info("Upload Finallizado");
 		} catch (IOException e) {
-			LOG.info("Erro no upload da imagem: ".concat(e.getMessage()));
+			throw new FileException("Erro no upload da imagem: ".concat(e.getMessage()));
 		}
 		LOG.info("Resultado do Upload: ".concat(uploadResult.toString()));
 		
@@ -66,7 +67,7 @@ public class CloudinaryService {
 		    fos.write(file.getBytes());
 		    fos.close();
 		} catch (IllegalStateException | IOException e) {
-			LOG.info("Erro na conversão da imagem: ".concat(e.getMessage()));
+			throw new FileException("Erro na conversão da imagem: ".concat(e.getMessage()));
 		}
 		return convFile;
 	}

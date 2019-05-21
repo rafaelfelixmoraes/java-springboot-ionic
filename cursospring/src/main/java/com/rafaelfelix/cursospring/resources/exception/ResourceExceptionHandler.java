@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.rafaelfelix.cursospring.services.exceptions.AuthorizationException;
 import com.rafaelfelix.cursospring.services.exceptions.DataIntegrityException;
 import com.rafaelfelix.cursospring.services.exceptions.EncodingException;
+import com.rafaelfelix.cursospring.services.exceptions.FileException;
 import com.rafaelfelix.cursospring.services.exceptions.ObjectNotFoundException;
 
 @ControllerAdvice
@@ -63,5 +64,19 @@ public class ResourceExceptionHandler {
     protected ResponseEntity<?> authorization(AuthorizationException exception, HttpServletRequest request) {
 		return ResponseEntity.status(HttpStatus.FORBIDDEN)
         	   .body(new StandardError(HttpStatus.FORBIDDEN.value(), exception.getMessage(), new Date()));
+    }
+	
+	@ExceptionHandler(FileException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    protected ResponseEntity<?> file(FileException exception) {
+		return ResponseEntity.badRequest()
+        	   .body(new StandardError(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), new Date()));
+    }
+	
+	@ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected ResponseEntity<?> runtime(RuntimeException exception) {
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        	   .body(new StandardError(HttpStatus.INTERNAL_SERVER_ERROR.value(), exception.getMessage(), new Date()));
     }
 }
