@@ -1,5 +1,6 @@
 package com.rafaelfelix.cursospring.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.rafaelfelix.cursospring.domain.Cidade;
 import com.rafaelfelix.cursospring.domain.Cliente;
@@ -37,6 +39,9 @@ public class ClienteService {
 	
 	@Autowired
 	private EnderecoRepository enderecoRepo;
+	
+	@Autowired
+	private CloudinaryService cloudinaryService;
 	
 	public Cliente find(Integer id) {
 		UserSS user = UserService.authenticated();
@@ -110,5 +115,9 @@ public class ClienteService {
 	private void updateData(Cliente newCliente, Cliente oldCliente) {
 		newCliente.setNome(oldCliente.getNome());
 		newCliente.setEmail(oldCliente.getEmail());
+	}
+	
+	public URI uploadProfilePicture(MultipartFile multipartFile) {
+		return cloudinaryService.uploadFile(multipartFile);
 	}
 }
