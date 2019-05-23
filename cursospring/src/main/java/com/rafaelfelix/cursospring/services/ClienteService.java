@@ -52,6 +52,9 @@ public class ClienteService {
 	@Value("${img.prefix.client.profile}")
 	private String imgPrefix;
 	
+	@Value("${img.profile.size}")
+	private Integer imgSize;
+	
 	public Cliente find(Integer id) {
 		UserSS user = UserService.authenticated();
 		if((user == null || !user.hasRole(Perfil.ADMIN)) && !id.equals(user.getId())) {
@@ -133,6 +136,9 @@ public class ClienteService {
 		}
 		
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		jpgImage = imageService.cropSquareImage(jpgImage);
+		jpgImage = imageService.resize(jpgImage, imgSize);
+		
 		String fileName = imgPrefix.concat(user.getId().toString());
 		File jpgFile = imageService.getFile(jpgImage, fileName);
 		
