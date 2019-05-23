@@ -1,10 +1,13 @@
 package com.rafaelfelix.cursospring.services;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,6 +45,12 @@ public class ClienteService {
 	
 	@Autowired
 	private CloudinaryService cloudinaryService;
+	
+	@Autowired
+	private ImageService imageService;
+	
+	@Value("${img.prefix.client.profile}")
+	private String imgPrefix;
 	
 	public Cliente find(Integer id) {
 		UserSS user = UserService.authenticated();
@@ -123,11 +132,14 @@ public class ClienteService {
 			throw new AuthorizationException("Acesso negado");
 		}
 		
-		URI uri = cloudinaryService.uploadFile(multipartFile);
+		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		String fileName = imgPrefix.concat(user.getId().toString());
+		File jpgFile = imageService.getFile(jpgImage, fileName);
 		
-		Optional<Cliente> cli = repo.findById(user.getId());
-		cli.get().setImageUrl(uri.toString());
-		repo.save(cli.get());
+		URI uri = cloudinaryService.uploadFile(jpgFile, fileName);
+		
+		// Deleta a imagem temporária criada
+		jpgFile.delete();
 		
 		return uri;
 	}

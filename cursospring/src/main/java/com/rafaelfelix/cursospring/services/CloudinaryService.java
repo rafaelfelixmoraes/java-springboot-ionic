@@ -42,6 +42,19 @@ public class CloudinaryService {
 		return uri;
 	}
 	
+	public URI uploadFile(File file, String fileName) {
+		URI uri = null;
+		URL url = null;
+		try {
+			url = new URL(uploadToCloudinary(file, fileName));
+			uri = url.toURI();
+		} catch (MalformedURLException | URISyntaxException e) {
+			throw new FileException("Erro ao obter URI. Mensagem: ".concat(e.getMessage()));
+		}
+		
+		return uri;
+	}
+	
 	@SuppressWarnings("rawtypes")
 	public String uploadToCloudinary(MultipartFile multipartFile, String fileName) {
 		Map uploadResult = new HashMap<>();
@@ -50,6 +63,22 @@ public class CloudinaryService {
 			File convFile = multipartToFile(multipartFile);
 			LOG.info("Upload Iniciado");
 			uploadResult = cloudinaryClient.uploader().upload(convFile, params);
+			LOG.info("Upload Finallizado");
+		} catch (IOException e) {
+			throw new FileException("Erro no upload da imagem: ".concat(e.getMessage()));
+		}
+		LOG.info("Resultado do Upload: ".concat(uploadResult.toString()));
+		
+		return uploadResult.get("url").toString();
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public String uploadToCloudinary(File file, String fileName) {
+		Map uploadResult = new HashMap<>();
+		try {
+			Map params = ObjectUtils.asMap("public_id", "profiles/".concat(fileName));
+			LOG.info("Upload Iniciado");
+			uploadResult = cloudinaryClient.uploader().upload(file, params);
 			LOG.info("Upload Finallizado");
 		} catch (IOException e) {
 			throw new FileException("Erro no upload da imagem: ".concat(e.getMessage()));
