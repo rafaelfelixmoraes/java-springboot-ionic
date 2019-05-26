@@ -12,8 +12,10 @@ public class ValidationError extends StandardError {
 	@JsonProperty("errors")
 	private List<FieldMessage> listMessage = new ArrayList<>();
 	
-	public ValidationError(Integer status, String msg, Date timeStamp) {
-		super(status, msg, timeStamp);
+	
+
+	public ValidationError(Date timeStamp, Integer status, String error, String message, String path) {
+		super(timeStamp, status, error, message, path);
 	}
 
 	public List<FieldMessage> getListMessage() {
