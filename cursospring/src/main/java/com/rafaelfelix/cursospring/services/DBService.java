@@ -34,34 +34,34 @@ import com.rafaelfelix.cursospring.repositories.ProdutoRepository;
 
 @Service
 public class DBService {
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bCrypt;
-	
+
 	@Autowired
 	private CategoriaRepository categoriaRepository;
-	
+
 	@Autowired
 	private ProdutoRepository produtoRepository;
-	
+
 	@Autowired
 	private EstadoRepository estadoRepository;
-	
+
 	@Autowired
 	private CidadeRepository cidadeRepository;
-	
+
 	@Autowired
 	private EnderecoRepository enderecoRepository;
-	
+
 	@Autowired
 	private ClienteRepository clienteRepository;
-	
+
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
-	
+
 	@Autowired
 	private PedidoRepository pedidoRepository;
-	
+
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 
@@ -95,6 +95,41 @@ public class DBService {
 		Produto prod13 = new Produto(null, "Controle Wireless Xbox one Preto", 200.00);
 		Produto prod14 = new Produto(null, "Tenis Nike Shocks Vermelho", 500.00);
 		Produto prod15 = new Produto(null, "Pneu Pirelli Cinturato 165/70", 160.00);
+		Produto prod16 = new Produto(null, "Produto 16", 10.00);
+		Produto prod17 = new Produto(null, "Produto 17", 10.00);
+		Produto prod18 = new Produto(null, "Produto 18", 10.00);
+		Produto prod19 = new Produto(null, "Produto 19", 10.00);
+		Produto prod20 = new Produto(null, "Produto 20", 10.00);
+		Produto prod21 = new Produto(null, "Produto 21", 10.00);
+		Produto prod22 = new Produto(null, "Produto 22", 10.00);
+		Produto prod23 = new Produto(null, "Produto 23", 10.00);
+		Produto prod24 = new Produto(null, "Produto 24", 10.00);
+		Produto prod25 = new Produto(null, "Produto 25", 10.00);
+		Produto prod26 = new Produto(null, "Produto 26", 10.00);
+		Produto prod27 = new Produto(null, "Produto 27", 10.00);
+		Produto prod28 = new Produto(null, "Produto 28", 10.00);
+		Produto prod29 = new Produto(null, "Produto 29", 10.00);
+		Produto prod30 = new Produto(null, "Produto 30", 10.00);
+		Produto prod31 = new Produto(null, "Produto 31", 10.00);
+		Produto prod32 = new Produto(null, "Produto 32", 10.00);
+		Produto prod33 = new Produto(null, "Produto 33", 10.00);
+		Produto prod34 = new Produto(null, "Produto 34", 10.00);
+		Produto prod35 = new Produto(null, "Produto 35", 10.00);
+		Produto prod36 = new Produto(null, "Produto 36", 10.00);
+		Produto prod37 = new Produto(null, "Produto 37", 10.00);
+		Produto prod38 = new Produto(null, "Produto 38", 10.00);
+		Produto prod39 = new Produto(null, "Produto 39", 10.00);
+		Produto prod40 = new Produto(null, "Produto 40", 10.00);
+		Produto prod41 = new Produto(null, "Produto 41", 10.00);
+		Produto prod42 = new Produto(null, "Produto 42", 10.00);
+		Produto prod43 = new Produto(null, "Produto 43", 10.00);
+		Produto prod44 = new Produto(null, "Produto 44", 10.00);
+		Produto prod45 = new Produto(null, "Produto 45", 10.00);
+		Produto prod46 = new Produto(null, "Produto 46", 10.00);
+		Produto prod47 = new Produto(null, "Produto 47", 10.00);
+		Produto prod48 = new Produto(null, "Produto 48", 10.00);
+		Produto prod49 = new Produto(null, "Produto 49", 10.00);
+		Produto prod50 = new Produto(null, "Produto 50", 10.00);
 
 		Estado est1 = new Estado(null, "Minas Gerais");
 		Estado est2 = new Estado(null, "São Paulo");
@@ -105,8 +140,8 @@ public class DBService {
 
 		Cliente cli1 = new Cliente(null, "Maria Silva", "dickinson.rafael@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, bCrypt.encode("abc123"));
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
-		
-		Cliente cli2 = new Cliente(null, "José da Silva", "rafaelstaile@yahoo.com.br", "19517834098", TipoCliente.PESSOAFISICA, bCrypt.encode("abc123"));
+
+		Cliente cli2 = new Cliente(null, "José da Silva", "rafaelstaile@yahoo.com.br", "19517834098",TipoCliente.PESSOAFISICA, bCrypt.encode("abc123"));
 		cli2.getTelefones().addAll(Arrays.asList("44098866", "912345678"));
 		cli2.addPerfil(Perfil.ADMIN);
 
@@ -127,7 +162,11 @@ public class DBService {
 		ItemPedido ip2 = new ItemPedido(ped1, prod3, 0.00, 2, 80.00);
 		ItemPedido ip3 = new ItemPedido(ped2, prod2, 100.00, 1, 800.00);
 
-		cat1.getProdutos().addAll(Arrays.asList(prod1, prod2, prod3));
+		cat1.getProdutos()
+				.addAll(Arrays.asList(prod1, prod2, prod3, prod16, prod17, prod18, prod19, prod20, prod21, prod22,
+						prod23, prod24, prod25, prod26, prod27, prod28, prod29, prod30, prod31, prod32, prod34, prod35,
+						prod36, prod37, prod38, prod39, prod40, prod41, prod42, prod43, prod44, prod45, prod46, prod47,
+						prod48, prod49, prod50));
 		cat2.getProdutos().addAll(Arrays.asList(prod2, prod4));
 		cat3.getProdutos().addAll(Arrays.asList(prod5, prod6));
 		cat4.getProdutos().addAll(Arrays.asList(prod1, prod2, prod3, prod7));
@@ -152,6 +191,41 @@ public class DBService {
 		prod13.getCategorias().addAll(Arrays.asList(cat8));
 		prod14.getCategorias().addAll(Arrays.asList(cat9));
 		prod15.getCategorias().addAll(Arrays.asList(cat10));
+		prod16.getCategorias().add(cat1);
+		prod17.getCategorias().add(cat1);
+		prod18.getCategorias().add(cat1);
+		prod19.getCategorias().add(cat1);
+		prod20.getCategorias().add(cat1);
+		prod21.getCategorias().add(cat1);
+		prod22.getCategorias().add(cat1);
+		prod23.getCategorias().add(cat1);
+		prod24.getCategorias().add(cat1);
+		prod25.getCategorias().add(cat1);
+		prod26.getCategorias().add(cat1);
+		prod27.getCategorias().add(cat1);
+		prod28.getCategorias().add(cat1);
+		prod29.getCategorias().add(cat1);
+		prod30.getCategorias().add(cat1);
+		prod31.getCategorias().add(cat1);
+		prod32.getCategorias().add(cat1);
+		prod33.getCategorias().add(cat1);
+		prod34.getCategorias().add(cat1);
+		prod35.getCategorias().add(cat1);
+		prod36.getCategorias().add(cat1);
+		prod37.getCategorias().add(cat1);
+		prod38.getCategorias().add(cat1);
+		prod39.getCategorias().add(cat1);
+		prod40.getCategorias().add(cat1);
+		prod41.getCategorias().add(cat1);
+		prod42.getCategorias().add(cat1);
+		prod43.getCategorias().add(cat1);
+		prod44.getCategorias().add(cat1);
+		prod45.getCategorias().add(cat1);
+		prod46.getCategorias().add(cat1);
+		prod47.getCategorias().add(cat1);
+		prod48.getCategorias().add(cat1);
+		prod49.getCategorias().add(cat1);
+		prod50.getCategorias().add(cat1);
 
 		est1.getCidades().addAll(Arrays.asList(cid1));
 		est2.getCidades().addAll(Arrays.asList(cid2, cid3));
@@ -170,10 +244,13 @@ public class DBService {
 
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8, cat9, cat10));
 		produtoRepository.saveAll(Arrays.asList(prod1, prod2, prod3, prod4, prod5, prod6, prod7, prod8, prod9, prod10,
-												prod11, prod12, prod13, prod14, prod15));
+								  prod11, prod12, prod13, prod14, prod15, prod16, prod17, prod18, prod19, prod20, prod21,
+								  prod22, prod23, prod24, prod25, prod26, prod27, prod28, prod29, prod30, prod31, prod32,
+								  prod33, prod34, prod35, prod36, prod37, prod38, prod39, prod40, prod41, prod42, prod43,
+								  prod44, prod45, prod46, prod47, prod48, prod49, prod50));
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3));
-		clienteRepository.saveAll(Arrays.asList(cli1,cli2));
+		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
 		enderecoRepository.saveAll(Arrays.asList(end1, end2, end3));
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
