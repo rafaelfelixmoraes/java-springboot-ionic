@@ -40,7 +40,7 @@ public class EnderecoResource {
 	 * @param cep O Cep do endereço a ser pesquisado
 	 * @return {@link HttpStatus}: <b><i>OK(200)</i></b> com o objeto {@link EnderecoDTO}
 	 */
-	@GetMapping(value = "/cep", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<?> findAddressByCep(@RequestParam(value = "cep") String cep) {
 		// URI (URL) parameters
 		Map<String, String> uriParams = new HashMap<String, String>();
