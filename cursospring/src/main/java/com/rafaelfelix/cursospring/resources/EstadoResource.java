@@ -33,7 +33,7 @@ public class EstadoResource {
 		return ResponseEntity.ok(obj);
 	}
 	
-	@GetMapping("/listar")
+	@GetMapping("")
 	public ResponseEntity<List<EstadoDTO>> findAll() {
 		List<Estado> listObj = service.findAll();
 		List<EstadoDTO> listDto = listObj.stream().map(obj -> new EstadoDTO(obj)).collect(Collectors.toList());

@@ -23,7 +23,7 @@ public class ProdutoResource {
 	@Autowired
 	private ProdutoService service;
 	
-	@GetMapping("/listar")
+	@GetMapping("")
 	public ResponseEntity<?> listAll() {
 		List<Produto> listObj = service.findAll();
 		

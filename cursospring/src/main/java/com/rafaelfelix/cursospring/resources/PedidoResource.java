@@ -27,7 +27,7 @@ public class PedidoResource {
 	@Autowired
 	private PedidoService service;
 	
-	@GetMapping("/listar")
+	@GetMapping("")
 	public ResponseEntity<?> listAll() {
 		List<Pedido> listObj = service.findAll();
 		
@@ -47,7 +47,7 @@ public class PedidoResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@GetMapping("")
+	@GetMapping("/page")
 	public ResponseEntity<Page<Pedido>> findPage(
 			@RequestParam(value = "pageNumber", defaultValue = "0") Integer page, 
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 

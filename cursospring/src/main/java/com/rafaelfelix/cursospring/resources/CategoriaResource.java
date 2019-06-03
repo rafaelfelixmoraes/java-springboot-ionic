@@ -32,7 +32,7 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaService service;
 	
-	@GetMapping("/listar")
+	@GetMapping("")
 	public ResponseEntity<List<CategoriaDTO>> listAll() {
 		List<Categoria> listObj = service.findAll();
 		List<CategoriaDTO> listDto = listObj.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
