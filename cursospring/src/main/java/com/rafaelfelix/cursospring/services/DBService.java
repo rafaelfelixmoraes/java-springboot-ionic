@@ -72,10 +72,10 @@ public class DBService {
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Escritório");
 		Categoria cat3 = new Categoria(null, "Cama, mesa e banho");
-		Categoria cat4 = new Categoria(null, "Escolar");
-		Categoria cat5 = new Categoria(null, "Móveis");
-		Categoria cat6 = new Categoria(null, "Eletrodomésticos");
-		Categoria cat7 = new Categoria(null, "Eletrônicos");
+		Categoria cat4 = new Categoria(null, "Eletrônicos");
+		Categoria cat5 = new Categoria(null, "Jardinagem");
+		Categoria cat6 = new Categoria(null, "Decoração");
+		Categoria cat7 = new Categoria(null, "Perfumaria");
 		Categoria cat8 = new Categoria(null, "Games e Acessórios");
 		Categoria cat9 = new Categoria(null, "Roupas, calçados e acessórios");
 		Categoria cat10 = new Categoria(null, "Automóveis e acessórios");
@@ -172,6 +172,7 @@ public class DBService {
 		cat4.getProdutos().addAll(Arrays.asList(prod1, prod2, prod3, prod7));
 		cat5.getProdutos().addAll(Arrays.asList(prod8));
 		cat6.getProdutos().addAll(Arrays.asList(prod9, prod10));
+		cat7.getProdutos().addAll(Arrays.asList(prod11));
 		cat8.getProdutos().addAll(Arrays.asList(prod12, prod13));
 		cat9.getProdutos().addAll(Arrays.asList(prod14));
 		cat10.getProdutos().addAll(Arrays.asList(prod15));
