@@ -76,7 +76,11 @@ public class CloudinaryService {
 	public String uploadToCloudinary(File file, String fileName) {
 		Map uploadResult = new HashMap<>();
 		try {
-			Map params = ObjectUtils.asMap("public_id", "profiles/".concat(fileName));
+			Map params = ObjectUtils.asMap(
+					"public_id", "profiles/".concat(fileName),
+					"overwrite", true,
+					"invalidate", true,
+					"resource_type", "image");
 			LOG.info("Upload Iniciado");
 			uploadResult = cloudinaryClient.uploader().upload(file, params);
 			LOG.info("Upload Finallizado");
