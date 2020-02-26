@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.rafaelfelix.cursospring.services.exceptions.AuthorizationException;
 import com.rafaelfelix.cursospring.services.exceptions.DataIntegrityException;
 import com.rafaelfelix.cursospring.services.exceptions.EncodingException;
@@ -78,5 +81,29 @@ public class ResourceExceptionHandler {
     protected ResponseEntity<?> runtime(RuntimeException exception, HttpServletRequest request) {
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
     	   .body(new StandardError(new Date(), HttpStatus.INTERNAL_SERVER_ERROR.value(), "Generic Error", exception.getMessage(), request.getRequestURI()));
+    }
+	
+	@ExceptionHandler(AmazonServiceException.class)
+    protected ResponseEntity<?> amazonService(AmazonServiceException exception, HttpServletRequest request) {
+		HttpStatus httpStatus = HttpStatus.valueOf(exception.getErrorCode());
+		
+		return ResponseEntity.status(httpStatus)
+        	   .body(new StandardError(new Date(), httpStatus.value(), "Amazon Service Exception", exception.getErrorMessage(), request.getRequestURI()));
+    }
+	
+	@ExceptionHandler(AmazonClientException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    protected ResponseEntity<?> amazonClient(AmazonClientException exception, HttpServletRequest request) {
+		return ResponseEntity.badRequest()
+        	   .body(new StandardError(new Date(), HttpStatus.BAD_REQUEST.value(), "Amazon Client Exception", exception.getMessage(), request.getRequestURI()));
+    }
+	
+	@ExceptionHandler(AmazonS3Exception.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    protected ResponseEntity<?> amazonS3(AmazonS3Exception exception, HttpServletRequest request) {
+		HttpStatus httpStatus = HttpStatus.valueOf(exception.getErrorCode());
+		
+		return ResponseEntity.status(httpStatus)
+        	   .body(new StandardError(new Date(), httpStatus.value(), "Amazon S3 Exception", exception.getErrorMessage(), request.getRequestURI()));
     }
 }

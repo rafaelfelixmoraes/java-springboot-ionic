@@ -1,7 +1,8 @@
 package com.rafaelfelix.cursospring.services;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +30,7 @@ import com.rafaelfelix.cursospring.repositories.EnderecoRepository;
 import com.rafaelfelix.cursospring.security.UserSS;
 import com.rafaelfelix.cursospring.services.exceptions.AuthorizationException;
 import com.rafaelfelix.cursospring.services.exceptions.DataIntegrityException;
+import com.rafaelfelix.cursospring.services.exceptions.FileException;
 import com.rafaelfelix.cursospring.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -44,7 +46,7 @@ public class ClienteService {
 	private EnderecoRepository enderecoRepo;
 	
 	@Autowired
-	private CloudinaryService cloudinaryService;
+	private S3Service s3Servive;
 	
 	@Autowired
 	private ImageService imageService;
@@ -54,6 +56,12 @@ public class ClienteService {
 	
 	@Value("${img.profile.size}")
 	private Integer imgSize;
+	
+	@Value("${img.profiles.path}")
+	private String imgProfilesPath;
+	
+	@Value("${img.file.extension}")
+	private String imgFileExtension;
 	
 	public Cliente find(Integer id) {
 		UserSS user = UserService.authenticated();
@@ -144,7 +152,7 @@ public class ClienteService {
 		newCliente.setEmail(oldCliente.getEmail());
 	}
 	
-	public URI uploadProfilePicture(MultipartFile multipartFile) {
+	/*public URI uploadProfilePicture(MultipartFile multipartFile) {
 		UserSS user = UserService.authenticated();
 		if(user == null) {
 			throw new AuthorizationException("Acesso negado");
@@ -161,6 +169,33 @@ public class ClienteService {
 		
 		// Deleta a imagem temporária criada
 		jpgFile.delete();
+		
+		return uri;
+	}*/
+	
+	public URI uploadProfilePicture(MultipartFile multipartFile) {
+		final URI uri;
+		
+		try {
+			UserSS user = UserService.authenticated();
+			if(user == null) {
+				throw new AuthorizationException("Acesso negado");
+			}
+		
+			BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+			jpgImage = imageService.cropSquareImage(jpgImage);
+			jpgImage = imageService.resize(jpgImage, imgSize);
+		
+			String fileName = imgProfilesPath.concat(imgPrefix.concat(user.getId().toString())).concat(imgFileExtension);
+			InputStream jpgFile = imageService.getInputStream(jpgImage, "jpg");
+			uri = s3Servive.uploadFile(jpgFile, fileName, "image", null);
+		
+			// Deleta a imagem temporária criada
+			jpgFile.close();
+			jpgImage.flush();
+		} catch (IOException e) {
+			throw new FileException("Erro de IO: " + e.getMessage());
+		}
 		
 		return uri;
 	}

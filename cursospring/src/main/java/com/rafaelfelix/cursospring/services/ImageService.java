@@ -2,8 +2,11 @@ package com.rafaelfelix.cursospring.services;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -52,6 +55,17 @@ public class ImageService {
 			return file;
 		} catch (IOException e) {
 			throw new FileException("Erro ao obter arquivo");
+		}
+	}
+	
+	public InputStream getInputStream(BufferedImage img, String extension) {
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		try {
+			ImageIO.write(img, extension, os);
+			
+			return new ByteArrayInputStream(os.toByteArray());
+		} catch (IOException e) {
+			throw new FileException("Erro ao ler arquivo");
 		}
 	}
 	
